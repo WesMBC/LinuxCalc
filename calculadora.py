@@ -2,6 +2,27 @@ from tkinter import *
 from tkinter import ttk
 import math
 
+#Funciones para calulo
+
+caracteresValidos = ["1","2","3","4","5","6","7","8","9","0","(",")",".","-","+","/","x","X","*","=","c","C"]
+
+def ingresarValores(tecla):
+    if tecla in caracteresValidos:
+        entrada2.set(entrada2.get() + tecla)
+        
+def borrarTodo(tecla):
+    if tecla == "c" or tecla == "C":
+        entrada2.set("")
+
+def borrarUno(tecla):
+    if tecla == chr(9003):
+        nuevaEntrada = entrada2.get()
+        entrada2.set(nuevaEntrada[0:-1])
+
+def calulcar(tecla):
+    if tecla == "=":
+        entrada1.set(exec(entrada2.get()))
+
 
 root = Tk()
 
@@ -29,7 +50,7 @@ estilo_Entrada2.configure('entrada1.TLabel', font="arial 40", ANCHOR="e")
 entrada1 = StringVar()
 label_Entrada1 = ttk.Label(mainframe,textvariable=entrada1,style="entrada1.TLabel")
 
-entrada2 = StringVar
+entrada2 = StringVar()
 label_Entrada2 = ttk.Label(mainframe, textvariable=entrada2,style="entrada2.TLabel")
 
 
@@ -49,37 +70,37 @@ estilo_General_Botones.configure('estilo_General.TButton', font="arial 22", widt
 
 #Creacion de botones
 
-boton0 = ttk.Button(mainframe, text="0", style="numeros.TButton")
-boton1 = ttk.Button(mainframe, text="1", style="numeros.TButton")
-boton2 = ttk.Button(mainframe, text="2", style="numeros.TButton")
-boton3 = ttk.Button(mainframe, text="3", style="numeros.TButton")
-boton4 = ttk.Button(mainframe, text="4", style="numeros.TButton")
-boton5 = ttk.Button(mainframe, text="5", style="numeros.TButton")
-boton6 = ttk.Button(mainframe, text="6", style="numeros.TButton")
-boton7 = ttk.Button(mainframe, text="7", style="numeros.TButton")
-boton8 = ttk.Button(mainframe, text="8", style="numeros.TButton")
-boton9 = ttk.Button(mainframe, text="9", style="numeros.TButton")
+boton0 = ttk.Button(mainframe, text="0", style="numeros.TButton", command=lambda:ingresarValores("0"))
+boton1 = ttk.Button(mainframe, text="1", style="numeros.TButton", command=lambda:ingresarValores("1"))
+boton2 = ttk.Button(mainframe, text="2", style="numeros.TButton", command=lambda:ingresarValores("2"))
+boton3 = ttk.Button(mainframe, text="3", style="numeros.TButton", command=lambda:ingresarValores("3"))
+boton4 = ttk.Button(mainframe, text="4", style="numeros.TButton", command=lambda:ingresarValores("4"))
+boton5 = ttk.Button(mainframe, text="5", style="numeros.TButton", command=lambda:ingresarValores("5"))
+boton6 = ttk.Button(mainframe, text="6", style="numeros.TButton", command=lambda:ingresarValores("6"))
+boton7 = ttk.Button(mainframe, text="7", style="numeros.TButton", command=lambda:ingresarValores("7"))
+boton8 = ttk.Button(mainframe, text="8", style="numeros.TButton", command=lambda:ingresarValores("8"))
+boton9 = ttk.Button(mainframe, text="9", style="numeros.TButton", command=lambda:ingresarValores("9"))
 
-botonbotonBorrar = ttk.Button(mainframe, text=chr(9003), style="borrar.TButton")
-botonborrarTodo  = ttk.Button(mainframe, text="C", style="borrar.TButton")
-botonparentesis1 = ttk.Button(mainframe, text="(", style="estilo_General.TButton")
-botonparentesis2 = ttk.Button(mainframe, text=")", style="estilo_General.TButton")
-botonpunto       = ttk.Button(mainframe, text=".", style="estilo_General.TButton") 
+botonbotonBorrar = ttk.Button(mainframe, text=chr(9003), style="borrar.TButton", command=lambda:borrarUno(chr(9003)))
+botonborrarTodo  = ttk.Button(mainframe, text="C", style="borrar.TButton", command=lambda:borrarTodo("C"))
+botonparentesis1 = ttk.Button(mainframe, text="(", style="estilo_General.TButton", command=lambda:ingresarValores("("))
+botonparentesis2 = ttk.Button(mainframe, text=")", style="estilo_General.TButton", command=lambda:ingresarValores(")"))
+botonpunto       = ttk.Button(mainframe, text=".", style="estilo_General.TButton", command=lambda:ingresarValores(".")) 
 
-botonSumar       = ttk.Button(mainframe,text="+", style="estilo_General.TButton")
-botonRestar      = ttk.Button(mainframe,text="-", style="estilo_General.TButton")
-botonMultiplicar = ttk.Button(mainframe,text="X", style="estilo_General.TButton")
-botonDividir     = ttk.Button(mainframe,text="/", style="estilo_General.TButton")
+botonSumar       = ttk.Button(mainframe,text="+", style="estilo_General.TButton", command=lambda:ingresarValores("+"))
+botonRestar      = ttk.Button(mainframe,text="-", style="estilo_General.TButton", command=lambda:ingresarValores("-"))
+botonMultiplicar = ttk.Button(mainframe,text="X", style="estilo_General.TButton", command=lambda:ingresarValores("X"))
+botonDividir     = ttk.Button(mainframe,text="/", style="estilo_General.TButton", command=lambda:ingresarValores("/"))
 
-botonIgual      = ttk.Button(mainframe,text="=", style="estilo_General.TButton")
-botonRaiz       = ttk.Button(mainframe,text="√", style="estilo_General.TButton")
-botonPorcentaje = ttk.Button(mainframe,text="%", style="estilo_General.TButton")
+botonIgual      = ttk.Button(mainframe,text="=", style="estilo_General.TButton", command=lambda:calulcar("="))
+botonRaiz       = ttk.Button(mainframe,text="√", style="estilo_General.TButton", command=lambda:ingresarValores("√"))
+botonPorcentaje = ttk.Button(mainframe,text="%", style="estilo_General.TButton", command=lambda:ingresarValores("%"))
 
 
 #Ubicacion en pantalla
 
-label_Entrada1.grid(column=0,row=0)
-label_Entrada2.grid(column=0,row=1)
+label_Entrada1.grid(column=0,row=0, columnspan=4, sticky=(W,E))
+label_Entrada2.grid(column=0,row=1, columnspan=4, sticky=(W,E))
 
 botonparentesis1.grid(column=0,row=2)
 botonparentesis2.grid(column=1,row=2)
