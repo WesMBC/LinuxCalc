@@ -6,6 +6,22 @@ import math
 
 caracteresValidos = ["1","2","3","4","5","6","7","8","9","0","(",")",".","-","+","/","x","X","*","=","c","C"]
 
+def keyboardInput(event):
+    #print("you have pressed: " + event.keysym)
+    if event.keysym in ["Return","KP_Enter"]:
+        calcular("=")
+        return True
+    if event.keysym in ["BackSpace"]:
+        borrarUno(chr(9003))
+        return True
+    if event.keysym in ["Delete"]:
+        borrarTodo("c")
+        return True
+
+    entrada2.set(entrada2.get()+event.char)
+    return True
+
+
 def parenthesis(calculacion:str):
     if not isinstance(calculacion,str):
         raise TypeError("El argumento debe ser una cadena de texto que contenga un calculo matematico")
@@ -40,7 +56,7 @@ def borrarUno(tecla):
         nuevaEntrada = entrada2.get()
         entrada2.set(nuevaEntrada[0:-1])
 
-def calulcar(tecla):
+def calcular(tecla):
 
     calculo = entrada2.get()
     resultado = 0
@@ -57,6 +73,8 @@ def calulcar(tecla):
 
 
 root = Tk()
+root.bind("<Key>", keyboardInput)
+
 
 root.title("Calculadora")
 root.geometry("+350+200")
@@ -113,6 +131,7 @@ boton7 = ttk.Button(mainframe, text="7", style="numeros.TButton", command=lambda
 boton8 = ttk.Button(mainframe, text="8", style="numeros.TButton", command=lambda:ingresarValores("8"))
 boton9 = ttk.Button(mainframe, text="9", style="numeros.TButton", command=lambda:ingresarValores("9"))
 
+
 botonbotonBorrar = ttk.Button(mainframe, text=chr(9003), style="borrar.TButton", command=lambda:borrarUno(chr(9003)))
 botonborrarTodo  = ttk.Button(mainframe, text="C", style="borrar.TButton", command=lambda:borrarTodo("C"))
 botonparentesis1 = ttk.Button(mainframe, text="(", style="estilo_General.TButton", command=lambda:ingresarValores("("))
@@ -124,7 +143,7 @@ botonRestar      = ttk.Button(mainframe,text="-", style="estilo_General.TButton"
 botonMultiplicar = ttk.Button(mainframe,text="*", style="estilo_General.TButton", command=lambda:ingresarValores("*"))
 botonDividir     = ttk.Button(mainframe,text="/", style="estilo_General.TButton", command=lambda:ingresarValores("/"))
 
-botonIgual      = ttk.Button(mainframe,text="=", style="estilo_General.TButton", command=lambda:calulcar("="))
+botonIgual      = ttk.Button(mainframe,text="=", style="estilo_General.TButton", command=lambda:calcular("="))
 botonRaiz       = ttk.Button(mainframe,text="√", style="estilo_General.TButton", command=lambda:ingresarValores("√"))
 botonPorcentaje = ttk.Button(mainframe,text="%", style="estilo_General.TButton", command=lambda:ingresarValores("%"))
 
