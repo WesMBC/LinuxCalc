@@ -22,27 +22,6 @@ def keyboardInput(event):
     return True
 
 
-def parenthesis(calculacion:str):
-    if not isinstance(calculacion,str):
-        raise TypeError("El argumento debe ser una cadena de texto que contenga un calculo matematico")
-    
-    calculacion = calculacion.replace("((","(")
-    calculacion = calculacion.replace("))",")")
-    calculacion = calculacion.replace("(","i")
-    calculacion = calculacion.replace(")","i")
-    
-    elementos = calculacion.split("i")
-    resultado = 1
-
-    for contenido in elementos:
-        if contenido == "":
-            continue
-        resultado = resultado*eval(contenido)
-
-    return resultado
-
-
-
 def ingresarValores(tecla):
     if tecla in caracteresValidos:
         entrada2.set(entrada2.get() + tecla)
@@ -56,17 +35,80 @@ def borrarUno(tecla):
         nuevaEntrada = entrada2.get()
         entrada2.set(nuevaEntrada[0:-1])
 
+
+
+def parenthesis(calculacion:str):
+    if not isinstance(calculacion,str):
+        raise TypeError("El argumento debe ser una cadena de texto que contenga un calculo matematico")
+    
+    calculacion = calculacion.replace("(","i")
+    calculacion = calculacion.replace(")","i")
+    
+    elementos = calculacion.split("i")
+    print(elementos)
+    resultado = 1
+
+    for elemento in elementos:
+        if elemento == "":
+            continue
+        print(elemento)
+        resultado = resultado*calculo(elemento)
+    
+    return resultado
+    
+
+def division (calculacion:str):
+    """
+    Funcion que recibe una cadena de caracteres que son numero con una division del simbolo /
+    retornando: el numerados evaluado y el denominados evaluados
+
+    """
+    if not isinstance(calculacion,str):
+        raise TypeError("El argumento debe ser una cadena de texto que contenga un calculo matematico")
+    
+    if "/" not in calculacion:
+        raise TypeError("Tiene que tener un simbolo de division para poder usar esta funcion ")
+    elif "/" in calculacion:
+        calculaciones = calculacion.split("/")
+        respuestas = []
+        resultado = 1
+        for problema in calculaciones:
+            respuestas.append(calculo(problema))
+        for i in range(len(respuestas)-1,0,-1):
+            resultado = respuestas[i]/resultado
+            print(f"el resultado es {resultado}")
+        return  resultado
+    return False
+        
+
+def calculo(problema:str):
+    """
+    Funcion para la administracion de las ejecuciones de calculos matematicos de la caluladora
+    """
+    if not isinstance(problema,str):
+        raise TypeError("El argumento debe ser una cadena de texto que contenga un calculo matematico")
+    else:
+        resultado = 0
+        if "/" in problema:
+            resultado = division(problema)
+        elif "(" in problema:
+            resultado = parenthesis(problema)
+        else:
+            print(f"el problema es {problema}")
+            resultado = eval(problema)
+        
+        return resultado
+    
+
 def calcular(tecla):
 
-    calculo = entrada2.get()
-    resultado = 0
-    if tecla == "=":
-        if "(" in calculo or ")" in calculo:
-            resultado = parenthesis(calculo)
-            print(resultado)
-            entrada1.set(str(resultado))
+    if tecla != "=":
+        raise TypeError("no es el caracter =") 
+    elif tecla == "=":
+        if entrada2.get() == "":
+            entrada1.set("vacio")
             return True
-        entrada1.set(eval(entrada2.get()))
+        entrada1.set(calculo(entrada2.get()))
         return True
     else:
         return False
