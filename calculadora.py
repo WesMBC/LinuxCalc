@@ -120,7 +120,8 @@ root.bind("<Key>", keyboardInput)
 
 root.title("Calculadora")
 root.geometry("+350+200")
-
+root.columnconfigure(0,weight=1)
+root.rowconfigure(0,weight=1)
 
 #Estilos 
 
@@ -129,7 +130,20 @@ estilos.theme_use("clam")
 estilos.configure('mainframe.TFrame', background = "#DBDBDB")
 
 mainframe = ttk.Frame(root,style="mainframe.TFrame")
-mainframe.grid(column=0, row=0)
+mainframe.grid(column=0, row=0, sticky=(W,N,E,S))
+mainframe.columnconfigure(0,weight=1)
+mainframe.columnconfigure(1,weight=1)
+mainframe.columnconfigure(2,weight=1)
+mainframe.columnconfigure(3,weight=1)
+
+mainframe.rowconfigure(0,weight=1)
+mainframe.rowconfigure(1,weight=1)
+mainframe.rowconfigure(2,weight=1)
+mainframe.rowconfigure(3,weight=1)
+mainframe.rowconfigure(4,weight=1)
+mainframe.rowconfigure(5,weight=1)
+mainframe.rowconfigure(6,weight=1)
+mainframe.rowconfigure(7,weight=1)
 
 
 #estilos de label
@@ -158,7 +172,7 @@ estilo_borrar.map("borrar.TButton", foreground=[('active', '#FFFFFF')], backgrou
 
 estilo_General_Botones = ttk.Style()
 estilo_General_Botones.configure('estilo_General.TButton', font="arial 22", width=5,relief = "flat", background="#CECECE")
-
+estilo_General_Botones.map('estilo_General.TButton', foreground=[('active', '#FF3300')], background = [("active","#FFFFFF")])
 
 #Creacion de botones
 
@@ -192,8 +206,8 @@ botonPorcentaje = ttk.Button(mainframe,text="%", style="estilo_General.TButton",
 
 #Ubicacion en pantalla
 
-label_Entrada1.grid(column=0,row=0, columnspan=4, sticky=(W,E))
-label_Entrada2.grid(column=0,row=1, columnspan=4, sticky=(W,E))
+label_Entrada1.grid(column=0,row=0, columnspan=4)
+label_Entrada2.grid(column=0,row=1, columnspan=4)
 
 botonparentesis1.grid(column=0,row=2)
 botonparentesis2.grid(column=1,row=2)
@@ -215,13 +229,13 @@ boton2.grid(column=1,row=5)
 boton1.grid(column=2,row=5)
 botonMultiplicar.grid(column=3,row=5)
 
-boton0.grid(column=0,columnspan=2,row=6,sticky=(E,W))
+boton0.grid(column=0,columnspan=2,row=6)
 botonpunto.grid(column=2,row=6)
 botonDividir.grid(column=3,row=6)
 
 
 
-botonIgual.grid(column=0,columnspan=2,row=7,sticky=(E,W))
+botonIgual.grid(column=0,columnspan=2,row=7)
 botonPorcentaje.grid(column=2,row=7)
 botonRaiz.grid(column=3,row=7)
 
@@ -229,7 +243,8 @@ botonRaiz.grid(column=3,row=7)
 for item in mainframe.winfo_children():
     item.grid_configure(ipady=10,padx=1,pady=1)
 
-
+for item in mainframe.winfo_children():
+    item.grid_configure(sticky=(W,N,E,S))
 
 
 root.mainloop()
